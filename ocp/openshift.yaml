@@ -1,0 +1,115 @@
+kind: Template
+apiVersion: v1
+metadata:
+  annotations:
+    description: corpcan sts integration
+    tags: instant-app,corpcan-sts-integration
+  name: corpcan-sts-integration
+objects:
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: corpcan-sts-integration
+    name: corpcan-sts-integration
+    namespace: corpcan-sts-integration-${ENVIRONMENT}
+  spec:
+    replicas: 1
+    selector:
+      app: corpcan-sts-integration
+      deploymentconfig: corpcan-sts-integration
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+        creationTimestamp: null
+        labels:
+          app: corpcan-sts-integration
+          deploymentconfig: corpcan-sts-integration
+      spec:
+        containers:
+        - env:
+          - name: java-keystore-path
+            value: /jks/keystore.jks
+          image: docker-registry.default.svc:5000/ised-ci/corpcan-sts-integration${ENVIRONMENT}
+          imagePullPolicy: Always
+          name: corpcan-sts-integration
+          ports:
+          - containerPort: 8778
+            protocol: TCP
+          - containerPort: 9779
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /jks
+            name: volume-48h40
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: volume-48h40
+          secret:
+            defaultMode: 420
+            items:
+            - key: java-keystore-file
+              path: keystore.jks
+            secretName: java-keystore-file
+    test: false
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - corpcan-sts-integration
+        from:
+          kind: ImageStreamTag
+          name: corpcan-sts-integration:${ENVIRONMENT}
+          namespace: ised-registry
+      type: ImageChange
+    - type: ConfigChange
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: corpcan-sts-integration
+    name: corpcan-sts-integration
+    namespace: corpcan-sts-integration-${ENVIRONMENT}
+  spec:
+    clusterIP: 172.30.248.72
+    ports:
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    - name: 9779-tcp
+      port: 9779
+      protocol: TCP
+      targetPort: 9779
+    selector:
+      deploymentconfig: corpcan-sts-integration
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+parameters:
+- displayName: environment
+  value: 
+  name: ENVIRONMENT
+  required: true
