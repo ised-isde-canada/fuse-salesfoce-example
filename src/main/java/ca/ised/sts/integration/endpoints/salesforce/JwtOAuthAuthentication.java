@@ -26,29 +26,29 @@ public class JwtOAuthAuthentication {
 	
 	private String CHAR_ENCODING = "UTF-8"; 
 	
-	@Value("${sf-sts-connected-app-consumer-key:3MVG9BM7anZT_gV5CbEWeNj26kmzfsOQTEXeJSkkkpfxztfHw2NhwdkMsZ05RAfI5ae3cjx7vL5DcJMrN0nTF}") // added default 
+	@Value("${sf_sts_connected_app_consumer_key}") 
 	private String SF_CONNECTED_APP_CONSUMER_KEY;
 	
-	@Value("${sf-sts-connected-app-username:michael.marshall4@ised.saasy.devsts}") // added default 
+	@Value("${sf_sts_connected_app_username}") 
 	private String SF_CONNECTED_APP_USERNAME;
 	
-	@Value("${sf-login-url-key:https://test.salesforce.com}") // added default 
+	@Value("${sf_login_url_key}") 
 	private String SF_LOGIN_URL;
 	
-	@Value("${sf-sts-connected-app-certificate-name:ca.ised.sts.integration.salesforce}") // added default 
-	private String SF_CONNECTED_APP_CERTIFICATE_NAME;
+	@Value("${sf_sts_endpoint_domain}") 
+	private String SF_ENDPOINT_DOMAIN;
 
-	@Value("${sf-sts-connected-app-certificate-password:SomePassword}") // added default 
+	@Value("${sf_sts_connected_app_certificate_password}") 
 	private String SF_CONNECTED_APP_CERTIFICATE_PASSWORD;
 	
-	@Value("${java-keystore-path:src/test/resources/keystore.jks}") // added default 
+	@Value("${java_keystore_path}") 
 	private String JAVA_KEYSTORE_PATH;
 
-	@Value("${java-keystore-password:password}") // added default 
+	@Value("${java_keystore_password}") 
 	private String JAVA_KEYSTORE_PASSWORD;
-	
-	@Value("${sf-sts-endpoint-domain:saasy-ised-isde--devsts.my.salesforce.com}") // added default 
-	private String SF_ENDPOINT_DOMAIN;
+		
+	@Value("${java_keystore_certificate_name}") 
+	private String SF_CONNECTED_APP_CERTIFICATE_NAME;
 	
 	private HttpURLConnection con = null; 
 	

@@ -19,11 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
+import ca.ised.sts.integration.BaseTest;
 import ca.ised.sts.integration.model.salesforce.Case;
 
-//@SpringBootTest
-//@RunWith(CamelSpringRunner.class)
-public class CaseQueryListProcessorTest {
+public class CaseQueryListProcessorTest extends BaseTest{
 
 	@Autowired
 	private CamelContext camelContext;
@@ -46,7 +45,7 @@ public class CaseQueryListProcessorTest {
 	
 	@DirtiesContext
 	@SuppressWarnings("unchecked")
-	//@Test
+	@Test
 	public void processTest() throws Exception {
 		Exchange exchange = new DefaultExchange(camelContext);
 	    InputStream caseListStream = new ByteArrayInputStream(caseListJson.getBytes());

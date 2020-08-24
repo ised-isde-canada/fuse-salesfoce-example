@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
-//@SpringBootTest
-//@RunWith(CamelSpringRunner.class)
-public class SalesforceAuthExceptionProcessorTest {
+import ca.ised.sts.integration.BaseTest;
+
+public class SalesforceAuthExceptionProcessorTest extends BaseTest{
 
 	@Autowired
 	private CamelContext camelContext;
@@ -28,14 +28,14 @@ public class SalesforceAuthExceptionProcessorTest {
 	@Mock
 	private SalesforceAuthenticationProcessor salesforceAuthenticationProcessor;
     
-    //@Before
+    @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         Mockito.doNothing().when(salesforceAuthenticationProcessor).process(Mockito.anyObject());
     }
     
     @DirtiesContext
-    //@Test
+    @Test
    	public void processTest() throws Exception {
    		Exchange exchange = new DefaultExchange(camelContext);
    		

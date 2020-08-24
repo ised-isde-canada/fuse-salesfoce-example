@@ -24,13 +24,13 @@ import ca.ised.sts.integration.processor.salesforce.SalesforceAuthenticationProc
 @Component
 public class StsRouteBuilder extends RouteBuilder {
 	
-	@Value("${sf-sts-endpoint-domain:saasy-ised-isde--devsts.my.salesforce.com}") // added default 
+	@Value("${sf_sts_endpoint_domain}") 
 	private String SF_ENDPOINT_DOMAIN;
 	
-	@Value("${sts-integration-endpoint-domain:localhost}") // added default 
+	@Value("${endpoints.server.address}")
 	private String INTEGRATION_ENDPOINT_DOMAIN;
 	
-	@Value("${sts-integration-endpoint-port:8181}") // added default 
+	@Value("${endpoints.server.port}")
 	private String INTEGRATION_ENDPOINT_PORT;
 	
 	@Autowired

@@ -9,34 +9,34 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Spy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.annotation.DirtiesContext;
-
+import ca.ised.sts.integration.BaseTest;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 
-//@RunWith(SpringRunner.class)
-//@TestPropertySource(locations = "classpath:env-variables-test.properties")
-//@ContextConfiguration( classes = Application.class)
-//@ExtendWith(MockitoExtension.class)
-public class JwtOAuthAuthenticationTest {
 
-	// @Spy
+public class JwtOAuthAuthenticationTest extends BaseTest{
+
+	@Spy
 	private JwtOAuthAuthentication jwtOAuthAuthenticationSpy;
 
-	// @Autowired
+	@Autowired
 	private JwtOAuthAuthentication jwtOAuthAuthentication;
 
 	@Mock
 	HttpURLConnection connection;
 
-	@Value("${sf-sts-connected-app-username}") // added default
+	@Value("${sf_sts_connected_app_username}")
 	private String SF_CONNECTED_APP_USERNAME;
 
 	@DirtiesContext
-	// @Test
+	@Test
 	public void getJWTtokenTest() {
 
 		String jwtToken = jwtOAuthAuthentication.getJWTtoken();
@@ -54,7 +54,7 @@ public class JwtOAuthAuthenticationTest {
 	}
 
 	@DirtiesContext
-	// @Test
+	@Test
 	public void getAuthTokenTest() throws IOException {
 		String authCodeString = "Test Auth Code";
 		String authTokenJson = "{\"access_token\":\"" + authCodeString
